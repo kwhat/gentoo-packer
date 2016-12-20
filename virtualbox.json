@@ -1,11 +1,28 @@
 {
+  "variables": {
+    "install_iso": "install-amd64-minimal-20161208.iso",
+    "checksum_iso": "c5ebb656ae04dcb2a48b617326e7ee72118228ba6a04c2e2539cfe06301cdf7f79461cd039690bab9b1540bfc7aee244a74285e8a80bf732b412000aec8b06ed",
+    "stage4_tar": "stage4-amd64-minimal-20161215.tar.bz2",
+    "checksum_tar": "d227afa38defa56d26709310c4c78365398d2f2c446c796a4655abe10aaa3fca8ff362319a435b2f41bc2876728df2b9074eca0d8c57f7320e4ba2e8422f3bac",
+    "username": "root",
+    "password": "packer"
+  },
   "builders": [
     {
+      "type": "virtualbox-iso",
+      "vm_name": "Gentoo",
+      "virtualbox_version_file": ".vbox_version",
+      "headless": false,
+      "keep_registered": true,
+      "hard_drive_interface": "sata",
+    
+      "boot_wait": "5s",
       "boot_command": [
         "gentoo-nofb",
         "<enter>",
         "<wait10>",
         "<enter>",
+        "<wait10>",
         "<wait10>",
         "<wait10>",
         "<wait10>",
@@ -20,38 +37,34 @@
         "{{user `password`}}",
         "<enter>",
         "<wait>",
-        "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
-        "<enter>",
-        "<wait>",
-        "echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config",
-        "<enter>",
-        "<wait>",
         "/etc/init.d/sshd start",
         "<enter>",
         "<wait>"
       ],
-      "boot_wait": "5s",
-      "disk_size": 60000,
-      "guest_additions_mode": "disable",
+      
       "guest_os_type": "Gentoo_64",
-      "headless": false,
-      "iso_checksum": "1fe353fec7142a551348ba3aa1b42dcf73df8ad815340f7da30239357f8d6b2fa4a5e2db8075efde9b3c28fcf16b62d5f8045cfb9c57fa0bda55821fe5390d44",
+      "disk_size": 24576,
+      "guest_additions_mode": "disable",
+      
+      
+      "iso_url": "http://distfiles.gentoo.org/releases/amd64/autobuilds/current-install-amd64-minimal/{{user `install_iso`}}",
+      "iso_checksum": "{{user `checksum_iso`}}",
       "iso_checksum_type": "sha512",
-      "iso_url": "http://distfiles.gentoo.org/releases/amd64/autobuilds/{{user `stage3`}}/install-amd64-minimal-{{user `stage3`}}.iso",
-      "shutdown_command": "shutdown -hP now",
+      
       "ssh_password": "{{user `password`}}",
       "ssh_username": "{{user `username`}}",
-      "ssh_wait_timeout": "20s",
-      "type": "virtualbox-iso",
-      "vm_name": "Gentoo"
+      "ssh_wait_timeout": "2m",
+      
+      "vboxmanage": [
+          ["modifyvm", "{{.Name}}", "--memory", "4196"],
+          ["modifyvm", "{{.Name}}", "--cpus", "8"]
+      ],
+      
+      "shutdown_command": "shutdown -hP now"
     }
   ],
   "description": "Faithful Stage 3 Gentoo Installation (VirtualBox)",
   "post-processors": [
-    {
-      "output": "gentoo-amd64-stage3-virtualbox.box",
-      "type": "vagrant"
-    }
   ],
   "provisioners": [
     {
@@ -60,21 +73,22 @@
       "type": "file"
     },
     {
+      "destination": "/tmp/kernel.config",
+      "source": "kernel.config",
+      "type": "file"
+    },
+    {
       "environment_vars": [
-        "STAGE3={{user `stage3`}}",
+        "STAGE4={{user `stage4_tar`}}",
+        "CHECKSUM={{user `checksum_tar`}}",
         "VM_TYPE=virtualbox",
-        "SCRIPTS=/tmp"
+        "BASEDIR=/tmp"
       ],
       "scripts": [
         "provision.sh"
       ],
       "type": "shell"
     }
-  ],
-  "variables": {
-    "password": "packer",
-    "stage3": "20150702",
-    "username": "root"
-  }
+  ]
 }
 

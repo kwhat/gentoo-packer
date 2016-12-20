@@ -1,34 +1,22 @@
 #!/bin/bash
 
-if [[ -z $STAGE3 ]]
+if [[ -z $STAGE4 ]]
 then
-  echo "STAGE3 environment variable must be set to a timestamp."
+  echo "STAGE4 environment variable must be set to an iso file."
   exit 1
 fi
 
-if [[ -z $SCRIPTS ]]
+if [[ -z $BASEDIR ]]
 then
-  SCRIPTS=.
+  BASEDIR=.
 fi
 
-chmod +x $SCRIPTS/scripts/*.sh
-
-for script in \
-  partition   \
-  stage3      \
-  mounts      \
-  resolv.conf \
-  portage     \
-  timezone    \
-  fstab       \
-  kernel      \
-  grub        \
-  $VM_TYPE    \
-  network     \
-  vagrant     \
-  cleanup
+#$BASEDIR/scripts/stage4/*.sh \
+for script in $BASEDIR/scripts/stage3/*.sh \
+  $BASEDIR/scripts/cleanup.sh
 do
-  "$SCRIPTS/scripts/$script.sh"
+  echo "$script"
+  chmod +x "$script" && "$script"
 done
 
 echo "All done."
