@@ -1,15 +1,15 @@
 #!/bin/bash
 
 sgdisk \
-  -n 1:0:+4M -t 1:8300 -c 1:"bios" \
-  -n 1:4M:+128M -t 1:8300 -c 1:"boot" \
-  -n 2:-4G:+4G   -t 2:8200 -c 2:"swap" \
-  -n 3:0     -t 3:8300 -c 3:"root" \
+  -n 1:0:+2M     -t 1:ef02 -c 1:"grub" \
+  -n 2:+2M:+128M -t 2:8300 -c 2:"boot" \
+  -n 3:-4G+4G    -t 3:8200 -c 3:"swap" \
+  -n 4:+128M:-4G -t 4:8300 -c 4:"root" \
   -p /dev/sda
 
 sync
-
-mkfs.vfat /dev/sda2
+fdisk -l /dev/sda
+mkfs.ext2 /dev/sda2
 mkfs.ext4 /dev/sda4
 
 mkswap /dev/sda3 && swapon /dev/sda3

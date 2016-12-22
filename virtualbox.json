@@ -7,6 +7,7 @@
     "username": "root",
     "password": "packer"
   },
+  "description": "Faithful Stage 3 Gentoo Installation (VirtualBox)",
   "builders": [
     {
       "type": "virtualbox-iso",
@@ -15,7 +16,7 @@
       "headless": false,
       "keep_registered": true,
       "hard_drive_interface": "sata",
-    
+
       "boot_wait": "5s",
       "boot_command": [
         "gentoo-nofb",
@@ -41,54 +42,52 @@
         "<enter>",
         "<wait>"
       ],
-      
+
       "guest_os_type": "Gentoo_64",
       "disk_size": 24576,
       "guest_additions_mode": "disable",
-      
-      
+
+
       "iso_url": "http://distfiles.gentoo.org/releases/amd64/autobuilds/current-install-amd64-minimal/{{user `install_iso`}}",
       "iso_checksum": "{{user `checksum_iso`}}",
       "iso_checksum_type": "sha512",
-      
+
       "ssh_password": "{{user `password`}}",
       "ssh_username": "{{user `username`}}",
       "ssh_wait_timeout": "2m",
-      
+
       "vboxmanage": [
-          ["modifyvm", "{{.Name}}", "--memory", "4196"],
+          ["modifyvm", "{{.Name}}", "--memory", "4096"],
           ["modifyvm", "{{.Name}}", "--cpus", "8"]
       ],
-      
+
       "shutdown_command": "shutdown -hP now"
     }
   ],
-  "description": "Faithful Stage 3 Gentoo Installation (VirtualBox)",
   "post-processors": [
   ],
   "provisioners": [
     {
-      "destination": "/tmp",
+      "type": "file",
       "source": "scripts",
-      "type": "file"
+      "destination": "/tmp"
     },
     {
-      "destination": "/tmp/kernel.config",
+      "type": "file",
       "source": "kernel.config",
-      "type": "file"
+      "destination": "/tmp/kernel.config",
     },
     {
+      "type": "shell",
+      "scripts": [
+        "provision.sh"
+      ],
       "environment_vars": [
         "STAGE4={{user `stage4_tar`}}",
         "CHECKSUM={{user `checksum_tar`}}",
         "VM_TYPE=virtualbox",
         "BASEDIR=/tmp"
-      ],
-      "scripts": [
-        "provision.sh"
-      ],
-      "type": "shell"
+      ]
     }
   ]
 }
-

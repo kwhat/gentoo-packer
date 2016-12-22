@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mount /dev/sda3 /mnt/gentoo
+mount /dev/sda4 /mnt/gentoo
 
 cd /mnt/gentoo
 wget --quiet http://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage4-amd64-minimal/${STAGE4}
