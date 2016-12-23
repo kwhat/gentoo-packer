@@ -2,7 +2,7 @@
   "variables": {
     "install_iso": "install-amd64-minimal-20161208.iso",
     "checksum_iso": "c5ebb656ae04dcb2a48b617326e7ee72118228ba6a04c2e2539cfe06301cdf7f79461cd039690bab9b1540bfc7aee244a74285e8a80bf732b412000aec8b06ed",
-    "stage4_tar": "stage4-amd64-minimal-20161215.tar.bz2",
+    "stage4_tar": "stage4-amd64-minimal-20161222.tar.bz2",
     "checksum_tar": "d227afa38defa56d26709310c4c78365398d2f2c446c796a4655abe10aaa3fca8ff362319a435b2f41bc2876728df2b9074eca0d8c57f7320e4ba2e8422f3bac",
     "username": "root",
     "password": "packer"
@@ -69,13 +69,18 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "scripts",
+      "source": "install",
+      "destination": "/tmp"
+    },
+    {
+      "type": "file",
+      "source": "setup",
       "destination": "/tmp"
     },
     {
       "type": "file",
       "source": "kernel.config",
-      "destination": "/tmp/kernel.config",
+      "destination": "/tmp/kernel.config"
     },
     {
       "type": "shell",

@@ -24,7 +24,5 @@ USE="${USE} python2 -python3"
 USE_PYTHON="2.7"
 PYTHON_TARGETS="python2_7"
 PYTHON_SINGLE_TARGET="python2_7"
-
-LLVM_TARGETS="ARM PowerPC Sparc X86"
 DATA
 EOF

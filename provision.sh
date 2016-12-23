@@ -12,8 +12,8 @@ then
 fi
 
 #$BASEDIR/scripts/stage4/*.sh \
-for script in $BASEDIR/scripts/stage3/*.sh \
-  $BASEDIR/scripts/cleanup.sh
+for script in $BASEDIR/install/*.sh \
+  $BASEDIR/setup/*.sh
 do
   echo "$script"
   chmod +x "$script" && "$script"
