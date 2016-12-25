@@ -69,12 +69,7 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "install",
-      "destination": "/tmp"
-    },
-    {
-      "type": "file",
-      "source": "setup",
+      "source": "scripts",
       "destination": "/tmp"
     },
     {
@@ -84,8 +79,26 @@
     },
     {
       "type": "shell",
+      "remote_folder": "/tmp/scripts",
       "scripts": [
-        "provision.sh"
+        "scripts/00_partition.sh",
+        "scripts/10_stage4.sh",
+        "scripts/20_portage.sh",
+        "scripts/30_mounts.sh",
+        "scripts/40_make.conf.sh",
+        "scripts/41_fstab.sh",
+        "scripts/42_inittab.sh",
+        "scripts/43_resolv.conf.sh",
+        "scripts/44_timezone.sh",
+        "scripts/45_package.keywords.sh",
+        "scripts/46_network.sh",
+        "scripts/50_update.sh",
+        "scripts/60_pwgen.sh",
+        "scripts/70_kernel.sh",
+        "scripts/80_grub.sh",
+        "scripts/98_virtualbox.sh",
+        "scripts/99_cleanup.sh"
+
       ],
       "environment_vars": [
         "STAGE4={{user `stage4_tar`}}",
