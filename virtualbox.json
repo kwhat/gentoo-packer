@@ -1,9 +1,9 @@
 {
   "variables": {
-    "install_iso": "install-amd64-minimal-20161208.iso",
-    "checksum_iso": "c5ebb656ae04dcb2a48b617326e7ee72118228ba6a04c2e2539cfe06301cdf7f79461cd039690bab9b1540bfc7aee244a74285e8a80bf732b412000aec8b06ed",
-    "stage4_tar": "stage4-amd64-minimal-20161222.tar.bz2",
-    "checksum_tar": "d227afa38defa56d26709310c4c78365398d2f2c446c796a4655abe10aaa3fca8ff362319a435b2f41bc2876728df2b9074eca0d8c57f7320e4ba2e8422f3bac",
+    "install_iso": "install-amd64-minimal-20161229.iso",
+    "checksum_iso": "d55b3fed5f350f4d13caf774aafd101331749604dfb810d7c78884f2252bb9e2ec04a8dbba6327cf15f6df62c194f9958ded10eb5f202359808013939df9d81b",
+    "stage4_tar": "stage4-amd64-minimal-20161229.tar.bz2",
+    "checksum_tar": "06185b8855abe59a4b255a63b5ad4ce7e9db44f60db1c4e3057680bb791055a61afdeb03faa99e08916b5bbd4bbe7828c8fed86cc6c3f20648abb22486e4a6e0",
     "username": "root",
     "password": "packer"
   },
