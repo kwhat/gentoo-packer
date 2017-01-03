@@ -33,7 +33,8 @@ or
 This is a [Packer](https://packer.io/) template. Install the latest version of
 Packer, then:
 
-    packer build virtualbox.json
+    ./genjson.sh
+    packer build virtualboxfinal.json
 
 This will chew for a bit and finally output a Vagrant box file.
 
