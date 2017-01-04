@@ -31,7 +31,7 @@ or
 ## Usage
 
 This is a [Packer](https://packer.io/) template. Install the latest version of
-Packer, then:
+Packer and jq [https://stedolan.github.io/jq/], then:
 
     ./genjson.sh
     packer build virtualboxfinal.json
