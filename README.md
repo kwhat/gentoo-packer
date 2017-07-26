@@ -31,9 +31,10 @@ or
 ## Usage
 
 This is a [Packer](https://packer.io/) template. Install the latest version of
-Packer, then:
+Packer and jq [https://stedolan.github.io/jq/], then:
 
-    packer build virtualbox.json
+    ./genjson.sh
+    packer build virtualboxfinal.json
 
 This will chew for a bit and finally output a Vagrant box file.
 
