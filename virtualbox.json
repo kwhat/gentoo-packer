@@ -1,13 +1,13 @@
 {
   "variables": {
-    "install_iso": "ph",
-    "checksum_iso": "ph",
-    "stage4_tar": "ph",
-    "checksum_tar": "ph",
+    "install_iso": "install-amd64-minimal-20170720.iso",
+    "checksum_iso": "892377c65fb7751907169df7955388fd27f41dda43821f9011db9234d0f2015a823ea04b6e36532a96c1beb320f38affd0b19f291ea1abcd128caa1c789fa1a9",
+    "stage4_tar": "stage4-amd64-minimal-20170720.tar.bz2",
+    "checksum_tar": "b520e02eb0ab8aec57aeac0f8e0722a48923184c5792c7d51e6064625337ebf7fa3eaf4efa7cd5efbcff7746e2059be11966c6ec0bd33404f1091c0511f785a1",
     "username": "root",
     "password": "packer"
   },
-  "description": "Faithful Stage 3 Gentoo Installation (VirtualBox)",
+  "description": "Gentoo Stage 4 Installation (VirtualBox)",
   "builders": [
     {
       "type": "virtualbox-iso",
