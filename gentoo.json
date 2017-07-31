@@ -1,13 +1,14 @@
 {
   "variables": {
-    "install_iso": "install-amd64-minimal-20170720.iso",
-    "checksum_iso": "892377c65fb7751907169df7955388fd27f41dda43821f9011db9234d0f2015a823ea04b6e36532a96c1beb320f38affd0b19f291ea1abcd128caa1c789fa1a9",
-    "stage4_tar": "stage4-amd64-minimal-20170720.tar.bz2",
-    "checksum_tar": "b520e02eb0ab8aec57aeac0f8e0722a48923184c5792c7d51e6064625337ebf7fa3eaf4efa7cd5efbcff7746e2059be11966c6ec0bd33404f1091c0511f785a1",
+    "mirror": "http://distfiles.gentoo.org/",
+    "iso_file": "releases/amd64/autobuilds/20170720/install-amd64-minimal-20170720.iso",
+    "iso_checksum": "892377c65fb7751907169df7955388fd27f41dda43821f9011db9234d0f2015a823ea04b6e36532a96c1beb320f38affd0b19f291ea1abcd128caa1c789fa1a9",
+    "stage_file": "releases/amd64/autobuilds/20170720/stage4-amd64-minimal-20170720.tar.bz2",
+    "stage_checksum": "b520e02eb0ab8aec57aeac0f8e0722a48923184c5792c7d51e6064625337ebf7fa3eaf4efa7cd5efbcff7746e2059be11966c6ec0bd33404f1091c0511f785a1",
     "username": "root",
     "password": "packer"
   },
-  "description": "Gentoo Stage 4 Installation (VirtualBox)",
+  "description": "Gentoo Installation (VirtualBox)",
   "builders": [
     {
       "type": "virtualbox-iso",
@@ -48,8 +49,8 @@
       "guest_additions_mode": "disable",
 
 
-      "iso_url": "http://distfiles.gentoo.org/releases/amd64/autobuilds/current-install-amd64-minimal/{{user `install_iso`}}",
-      "iso_checksum": "{{user `checksum_iso`}}",
+      "iso_url": "{{user `mirror`}}/{{user `iso_file`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "sha512",
 
       "ssh_password": "{{user `password`}}",
@@ -65,6 +66,7 @@
     }
   ],
   "post-processors": [
+	"vagrant"
   ],
   "provisioners": [
     {
@@ -82,7 +84,7 @@
       "remote_folder": "/tmp/scripts",
       "scripts": [
         "scripts/00_partition.sh",
-        "scripts/10_stage4.sh",
+        "scripts/10_stage.sh",
         "scripts/20_portage.sh",
         "scripts/30_mounts.sh",
         "scripts/40_make.conf.sh",
@@ -101,8 +103,9 @@
 
       ],
       "environment_vars": [
-        "STAGE4={{user `stage4_tar`}}",
-        "CHECKSUM={{user `checksum_tar`}}",
+	"MIRROR={{user `mirror`}}",
+        "STAGE_FILE={{user `stage_file`}}",
+        "STAGE_CHECKSUM={{user `stage_checksum`}}",
         "VM_TYPE=virtualbox",
         "BASEDIR=/tmp"
       ]
