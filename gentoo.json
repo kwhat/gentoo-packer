@@ -5,14 +5,17 @@
     "iso_checksum": "892377c65fb7751907169df7955388fd27f41dda43821f9011db9234d0f2015a823ea04b6e36532a96c1beb320f38affd0b19f291ea1abcd128caa1c789fa1a9",
     "stage_file": "releases/amd64/autobuilds/20170720/stage4-amd64-minimal-20170720.tar.bz2",
     "stage_checksum": "b520e02eb0ab8aec57aeac0f8e0722a48923184c5792c7d51e6064625337ebf7fa3eaf4efa7cd5efbcff7746e2059be11966c6ec0bd33404f1091c0511f785a1",
+    "vm_name": "Gentoo 64 Minimal",
+    "vm_description": "Gentoo 64 Minimal Base Install",
+    "vm_type": "Gentoo_64",
     "username": "root",
     "password": "packer"
   },
-  "description": "Gentoo Installation (VirtualBox)",
+  "description": "{{user `vm_description`}}",
   "builders": [
     {
       "type": "virtualbox-iso",
-      "vm_name": "Gentoo",
+      "vm_name": "{{user `vm_name`}}",
       "virtualbox_version_file": ".vbox_version",
       "headless": false,
       "keep_registered": true,
@@ -44,7 +47,7 @@
         "<wait>"
       ],
 
-      "guest_os_type": "Gentoo_64",
+      "guest_os_type": "{{user `vm_type`}}",
       "disk_size": 24576,
       "guest_additions_mode": "disable",
 
@@ -66,7 +69,10 @@
     }
   ],
   "post-processors": [
-	"vagrant"
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true
+    }
   ],
   "provisioners": [
     {
@@ -94,8 +100,9 @@
         "scripts/44_timezone.sh",
         "scripts/45_package.keywords.sh",
         "scripts/46_network.sh",
+        "scripts/47_sudoers.sh",
         "scripts/50_update.sh",
-        "scripts/60_pwgen.sh",
+        "scripts/60_accounts.sh",
         "scripts/70_kernel.sh",
         "scripts/80_grub.sh",
         "scripts/98_virtualbox.sh",

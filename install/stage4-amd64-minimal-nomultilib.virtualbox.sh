@@ -26,4 +26,7 @@ packer build \
 	-var "iso_checksum=${iso_checksum}" \
 	-var "stage_file=${base_uri}/${stage_file}" \
 	-var "stage_checksum=${stage_checksum}" \
+        -var "vm_name=Gentoo 64 Minimal NoMultiLib" \
+        -var "vm_description=Gentoo 64 Minimal NoMultiLib Base Install" \
+        -var "vm_typ=Gentoo_64" \
 	gentoo.json

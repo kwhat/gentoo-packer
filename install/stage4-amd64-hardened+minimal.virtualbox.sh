@@ -7,7 +7,7 @@ MIRROR="http://gentoo.ussg.indiana.edu"
 file_name=${0##*/}
 variant=$(awk -F'[.]' '{print $1}' <<< ${file_name%.*})
 arch=$(awk -F'[-]' '{print $2}' <<< ${variant%.*})
-vm_type=$(awk -F'[.]' '{print $2}' <<< ${file_name%.*})
+build_type=$(awk -F'[.]' '{print $2}' <<< ${file_name%.*})
 base_uri="releases/${arch}/autobuilds"
 
 # Get the latest ISO location and checksum.
@@ -20,13 +20,13 @@ stage_checksum=$(curl -s ${MIRROR}/${base_uri}/${stage_file}.DIGESTS | sed -n '/
 
 packer build \
 	-force \
-	-only=${vm_type}-iso \
+	-only=${build_type}-iso \
 	-var "mirror=${MIRROR}" \
 	-var "iso_file=${base_uri}/${iso_file}" \
 	-var "iso_checksum=${iso_checksum}" \
 	-var "stage_file=${base_uri}/${stage_file}" \
 	-var "stage_checksum=${stage_checksum}" \
-	-var "vm_name=Gentoo 64 Minimal" \
-	-var "vm_description=Gentoo 64 Minimal Base Install" \
-	-var "vm_typ=Gentoo_64" \
+	-var "vm_name=Gentoo 64 Hardened Minimal" \
+	-var "vm_description=Gentoo 64 Hardened Minimal Base Install" \
+	-var "vm_type=Gentoo_64" \
 	gentoo.json
