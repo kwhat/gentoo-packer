@@ -1,13 +1,13 @@
 #!/bin/sh
 
 chroot /mnt/gentoo /bin/bash <<'EOF'
-cat > /etc/portage/make.conf <<'DATA'
+cat > /etc/portage/make.conf <<DATA
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-march=x86-64 -mtune=generic -Os -fomit-frame-pointer -fno-stack-protector -pipe"
-CXXFLAGS="${CFLAGS}"
-MAKEOPTS="-j8"
+CFLAGS="${MAKE_FLAGS}"
+CXXFLAGS="\${CFLAGS}"
+MAKEOPTS="-j${MAKE_JOBS}"
 FEATURES="parallel-fetch"
-EMERGE_DEFAULT_OPTS="--with-bdeps=y --jobs=8 --load-average=10.0"
+EMERGE_DEFAULT_OPTS="--with-bdeps=y --jobs=${MAKE_JOBS} --load-average=$(echo ${MAKE_JOBS} \* 1.2 | bc)"
 
 ABI_X86="64 32"
 PORTAGE_NICENESS="0"
@@ -24,6 +24,5 @@ USE="${USE} python2 -python3"
 USE_PYTHON="2.7"
 PYTHON_TARGETS="python2_7"
 PYTHON_SINGLE_TARGET="python2_7"
-
 DATA
 EOF

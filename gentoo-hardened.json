@@ -3,17 +3,17 @@
     "mirror": "http://distfiles.gentoo.org/",
     "iso_file": "releases/amd64/autobuilds/20170727/install-amd64-minimal-20170727.iso",
     "iso_checksum": "a20b447d58b65f6166c15aba55e784de7e380163bb68417e3fad2d56f547cb39cbd2de1e6124e283010ad771b91b638b68d7148b993d1faf2994de259bbafc73",
-    "stage_file": "releases/amd64/autobuilds/20170727/stage4-amd64-minimal-20170727.tar.bz2",
-    "stage_checksum": "60efbba2aab6c678fae17ec8f77134d5314dc24976ce11876b40677aff83eae971ab1c5d2c7e2dfd0d206958f21d9cf3cc574eff339491ee60dbbcc1fe672fdc",
-    "vm_cpus": "8",
-    "vm_memory": "4096",
-    "vm_cflags": "-march=x86-64 -mtune=generic -Os -fomit-frame-pointer -fno-stack-protector -pipe"
+    "stage_file": "releases/amd64/autobuilds/20170727/hardened/stage4-amd64-hardened+minimal-20170727.tar.bz2",
+    "stage_checksum": "3234a0c57fa8a56607f8e04557b66c5169dd0f0f777fb87a7e053f14ec3b7e95d27f23af2b075147aa34096daefc137c89b3c072fcfc256e2e2aa179779cdc8d",
+    "vm_cpus": 8,
+    "vm_memory": 4096,
+    "vm_cflags": "-march=x86-64 -mtune=generic -O2 -D_FORTIFY_SOURCE=2 -fomit-frame-pointer -fstack-protector-strong --param ssp-buffer-size=4 -pipe"
   },
-  "description": "Gentoo 64 Minimal Base Install",
+  "description": "Gentoo 64 Hardened Minimal Base Install",
   "builders": [
     {
       "type": "virtualbox-iso",
-      "vm_name": "Gentoo 64 Minimal",
+      "vm_name": "Gentoo 64 Hardened Minimal",
       "virtualbox_version_file": ".vbox_version",
       "headless": false,
       "keep_registered": true,
@@ -45,7 +45,7 @@
         "<wait>"
       ],
 
-      "guest_os_type": "Gentoo_64",
+      "guest_os_type": "{{user `vm_type`}}",
       "disk_size": 24576,
       "guest_additions_mode": "disable",
 
@@ -54,8 +54,8 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "sha512",
 
-      "ssh_username": "root",
-      "ssh_password": "packer",
+      "ssh_password": "{{user `password`}}",
+      "ssh_username": "{{user `username`}}",
       "ssh_wait_timeout": "2m",
 
       "vboxmanage": [
@@ -80,7 +80,7 @@
     },
     {
       "type": "file",
-      "source": "gentoo.config",
+      "source": "kernel.config",
       "destination": "/tmp/kernel.config"
     },
     {
@@ -110,8 +110,9 @@
         "MIRROR={{user `mirror`}}",
         "STAGE_FILE={{user `stage_file`}}",
         "STAGE_CHECKSUM={{user `stage_checksum`}}",
-        "MAKE_FLAGS={{user `vm_cflags`}}",
-        "MAKE_JOBS={{user `vm_cpus`}}",
+        "VM_TYPE=virtualbox",
+        "MAKE_FLAGS={{user `vm_cflags`}}"
+        "MAKE_OPTS=-j{{user `vm_cpus`}}"
         "BASEDIR=/tmp"
       ]
     }
