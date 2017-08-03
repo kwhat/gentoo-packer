@@ -7,7 +7,7 @@ CFLAGS="${MAKE_FLAGS}"
 CXXFLAGS="\${CFLAGS}"
 MAKEOPTS="-j${MAKE_JOBS}"
 FEATURES="parallel-fetch"
-EMERGE_DEFAULT_OPTS="--with-bdeps=y --jobs=${MAKE_JOBS} --load-average=$(echo ${MAKE_JOBS} \* 1.2 | bc)"
+EMERGE_DEFAULT_OPTS="--with-bdeps=y --jobs=${MAKE_JOBS} --load-average=$(echo ${MAKE_JOBS} | awk '{ print $1 * 1.25 }')"
 
 ABI_X86="64 32"
 PORTAGE_NICENESS="0"

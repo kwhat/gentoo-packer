@@ -7,6 +7,7 @@ MIRROR="http://gentoo.ussg.indiana.edu"
 file_name=${0##*/}
 variant=$(awk -F'[.]' '{print $1}' <<< ${file_name%.*})
 arch=$(awk -F'[-]' '{print $2}' <<< ${variant%.*})
+vm_type=$(awk -F'[.]' '{print $2}' <<< ${file_name%.*})
 base_uri="releases/${arch}/autobuilds"
 
 # Get the latest ISO location and checksum.
@@ -19,7 +20,7 @@ stage_checksum=$(curl -s ${MIRROR}/${base_uri}/${stage_file}.DIGESTS | sed -n '/
 
 packer build \
 	-force \
-	-only=virtualbox-iso \
+	-only=${vm_type}-iso \
 	-var "mirror=${MIRROR}" \
 	-var "iso_file=${base_uri}/${iso_file}" \
 	-var "iso_checksum=${iso_checksum}" \

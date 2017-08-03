@@ -101,7 +101,7 @@
         "scripts/47_sudoers.sh",
         "scripts/50_update.sh",
         "scripts/60_accounts.sh",
-        "scripts/70_kernel.sh",
+        "scripts/70_hardened.sh",
         "scripts/80_grub.sh",
         "scripts/98_virtualbox.sh",
         "scripts/99_cleanup.sh"
@@ -110,9 +110,8 @@
         "MIRROR={{user `mirror`}}",
         "STAGE_FILE={{user `stage_file`}}",
         "STAGE_CHECKSUM={{user `stage_checksum`}}",
-        "VM_TYPE=virtualbox",
         "MAKE_FLAGS={{user `vm_cflags`}}"
-        "MAKE_OPTS=-j{{user `vm_cpus`}}"
+        "MAKE_JOBS={{user `vm_cpus`}}",
         "BASEDIR=/tmp"
       ]
     }

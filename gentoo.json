@@ -80,8 +80,8 @@
     },
     {
       "type": "file",
-      "source": "gentoo.config",
-      "destination": "/tmp/kernel.config"
+      "source": "kernel",
+      "destination": "/tmp"
     },
     {
       "type": "shell",
