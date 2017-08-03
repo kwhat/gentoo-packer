@@ -1,7 +1,6 @@
 #!/bin/bash
 
 chroot /mnt/gentoo /bin/bash <<'EOF'
-emerge --quiet net-dialup/mingetty
 cat > /etc/inittab <<'DATA'
 #
 # /etc/inittab:  This file describes how the INIT process should set up
