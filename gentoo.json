@@ -5,15 +5,19 @@
     "iso_checksum": "a20b447d58b65f6166c15aba55e784de7e380163bb68417e3fad2d56f547cb39cbd2de1e6124e283010ad771b91b638b68d7148b993d1faf2994de259bbafc73",
     "stage_file": "releases/amd64/autobuilds/20170727/stage4-amd64-minimal-20170727.tar.bz2",
     "stage_checksum": "60efbba2aab6c678fae17ec8f77134d5314dc24976ce11876b40677aff83eae971ab1c5d2c7e2dfd0d206958f21d9cf3cc574eff339491ee60dbbcc1fe672fdc",
+    "kernel_config": "kernel/gentoo-sources.smp.config",
+    "vm_name": "Gentoo 64 Base",
+    "vm_description": "Gentoo 64 Base Install",
+    "vm_type": "Gentoo_64",
     "vm_cpus": "8",
     "vm_memory": "4096",
     "vm_cflags": "-march=x86-64 -mtune=generic -Os -fomit-frame-pointer -fno-stack-protector -pipe"
   },
-  "description": "Gentoo 64 Minimal Base Install",
+  "description": "{{user `vm_description`}}",
   "builders": [
     {
       "type": "virtualbox-iso",
-      "vm_name": "Gentoo 64 Minimal",
+      "vm_name": "{{user `vm_name`}}",
       "virtualbox_version_file": ".vbox_version",
       "headless": false,
       "keep_registered": true,
@@ -45,7 +49,7 @@
         "<wait>"
       ],
 
-      "guest_os_type": "Gentoo_64",
+      "guest_os_type": "{{user `vm_type`}}",
       "disk_size": 24576,
       "guest_additions_mode": "disable",
 
@@ -93,7 +97,6 @@
         "scripts/30_mounts.sh",
         "scripts/40_make.conf.sh",
         "scripts/41_fstab.sh",
-        "scripts/42_inittab.sh",
         "scripts/43_resolv.conf.sh",
         "scripts/44_timezone.sh",
         "scripts/45_package.keywords.sh",
@@ -110,6 +113,7 @@
         "MIRROR={{user `mirror`}}",
         "STAGE_FILE={{user `stage_file`}}",
         "STAGE_CHECKSUM={{user `stage_checksum`}}",
+        "KERNEL_CONFIG={{user `kernel_config`}}",
         "MAKE_FLAGS={{user `vm_cflags`}}",
         "MAKE_JOBS={{user `vm_cpus`}}",
         "BASEDIR=/tmp"

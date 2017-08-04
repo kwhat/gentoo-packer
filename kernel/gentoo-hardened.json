@@ -5,8 +5,9 @@
     "iso_checksum": "a20b447d58b65f6166c15aba55e784de7e380163bb68417e3fad2d56f547cb39cbd2de1e6124e283010ad771b91b638b68d7148b993d1faf2994de259bbafc73",
     "stage_file": "releases/amd64/autobuilds/20170727/hardened/stage4-amd64-hardened+minimal-20170727.tar.bz2",
     "stage_checksum": "3234a0c57fa8a56607f8e04557b66c5169dd0f0f777fb87a7e053f14ec3b7e95d27f23af2b075147aa34096daefc137c89b3c072fcfc256e2e2aa179779cdc8d",
-    "vm_cpus": 8,
-    "vm_memory": 4096,
+    "kernel_config": "kernel/gentoo-sources.smp.config",
+    "vm_cpus": "8",
+    "vm_memory": "4096",
     "vm_cflags": "-march=x86-64 -mtune=generic -O2 -D_FORTIFY_SOURCE=2 -fomit-frame-pointer -fstack-protector-strong --param ssp-buffer-size=4 -pipe"
   },
   "description": "Gentoo 64 Hardened Minimal Base Install",
@@ -45,7 +46,7 @@
         "<wait>"
       ],
 
-      "guest_os_type": "{{user `vm_type`}}",
+      "guest_os_type": "Gentoo_64",
       "disk_size": 24576,
       "guest_additions_mode": "disable",
 
@@ -54,8 +55,8 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "sha512",
 
-      "ssh_password": "{{user `password`}}",
-      "ssh_username": "{{user `username`}}",
+      "ssh_username": "root",
+      "ssh_password": "packer",
       "ssh_wait_timeout": "2m",
 
       "vboxmanage": [
@@ -80,8 +81,8 @@
     },
     {
       "type": "file",
-      "source": "kernel.config",
-      "destination": "/tmp/kernel.config"
+      "source": "kernel",
+      "destination": "/tmp"
     },
     {
       "type": "shell",
@@ -93,7 +94,6 @@
         "scripts/30_mounts.sh",
         "scripts/40_make.conf.sh",
         "scripts/41_fstab.sh",
-        "scripts/42_inittab.sh",
         "scripts/43_resolv.conf.sh",
         "scripts/44_timezone.sh",
         "scripts/45_package.keywords.sh",
@@ -101,7 +101,7 @@
         "scripts/47_sudoers.sh",
         "scripts/50_update.sh",
         "scripts/60_accounts.sh",
-        "scripts/70_hardened.sh",
+        "scripts/70_kernel.sh",
         "scripts/80_grub.sh",
         "scripts/98_virtualbox.sh",
         "scripts/99_cleanup.sh"
@@ -110,7 +110,8 @@
         "MIRROR={{user `mirror`}}",
         "STAGE_FILE={{user `stage_file`}}",
         "STAGE_CHECKSUM={{user `stage_checksum`}}",
-        "MAKE_FLAGS={{user `vm_cflags`}}"
+        "KERNEL_CONFIG={{user `kernel_config`}}",
+        "MAKE_FLAGS={{user `vm_cflags`}}",
         "MAKE_JOBS={{user `vm_cpus`}}",
         "BASEDIR=/tmp"
       ]

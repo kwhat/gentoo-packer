@@ -1,6 +1,8 @@
 #!/bin/bash
 
 chroot /mnt/gentoo /bin/bash <<'EOF'
+emerge --quiet net-dialup/mingetty
+
 cat > /etc/inittab <<'DATA'
 #
 # /etc/inittab:  This file describes how the INIT process should set up
@@ -25,7 +27,7 @@ si::sysinit:/sbin/openrc sysinit
 # Further system initialization, brings up the boot runlevel.
 rc::bootwait:/sbin/openrc boot
 
-l0:0:wait:/sbin/openrc shutdown 
+l0:0:wait:/sbin/openrc shutdown
 l0s:0:wait:/sbin/halt -dhnp
 l1:1:wait:/sbin/openrc single
 l2:2:wait:/sbin/openrc nonetwork

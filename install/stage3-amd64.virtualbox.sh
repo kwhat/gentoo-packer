@@ -26,7 +26,11 @@ packer build \
 	-var "iso_checksum=${iso_checksum}" \
 	-var "stage_file=${base_uri}/${stage_file}" \
 	-var "stage_checksum=${stage_checksum}" \
-	-var "vm_name=Gentoo 64 Minimal" \
-	-var "vm_description=Gentoo 64 Minimal Base Install" \
+    -var "kernel_config=kernel/gentoo-sources.smp.config",
+	-var "vm_name=Gentoo 64 Base" \
+	-var "vm_description=Gentoo 64 Base Install" \
 	-var "vm_typ=Gentoo_64" \
+    -var "vm_cpus=8" \
+    -var "vm_memory=4096" \
+    -var "vm_cflags=-march=x86-64 -mtune=generic -Os -fomit-frame-pointer -fno-stack-protector -pipe" \
 	gentoo.json
