@@ -31,10 +31,6 @@
         "<enter>",
         "<wait10>",
         "<wait10>",
-        "<wait10>",
-        "<wait10>",
-        "<wait10>",
-        "<wait10>",
         "passwd root",
         "<enter>",
         "<wait>",
@@ -73,7 +69,9 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "keep_input_artifact": true
+      "compression_level": 1,
+      "keep_input_artifact": true,
+      "output": "vagrant/{{.BuildName}}.box"
     }
   ],
   "provisioners": [

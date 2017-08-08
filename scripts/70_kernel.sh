@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp -Rf $BASEDIR/kernel /mnt/gentoo/tmp/
+cp -f $BASEDIR/kernel/* /mnt/gentoo/tmp/
 
 if [ $MAKE_JOBS -lt 2 ] ; then
     KERNEL_CONFIG="${KERNEL_CONFIG/.smp/}"
@@ -14,7 +14,7 @@ fi
 chroot /mnt/gentoo /bin/bash <<EOF
 emerge --quiet sys-kernel/${KERNEL_PACKAGE}
 cd /usr/src/linux
-mv /tmp/kernel/${KERNEL_CONFIG} .config
+mv /tmp/${KERNEL_CONFIG} .config
 make olddefconfig
 make -j${MAKE_JOBS}
 make install

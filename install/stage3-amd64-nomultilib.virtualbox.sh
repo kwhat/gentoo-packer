@@ -28,7 +28,7 @@ packer build \
 	-var "stage_checksum=${stage_checksum}" \
 	-var "kernel_config=kernel/gentoo-sources.smp.config" \
 	-var "vm_name=Gentoo 64 Base" \
-	-var "vm_description=Gentoo 64 Base Install" \
+	-var "vm_description=Gentoo 64 NoMultilib Base Install" \
 	-var "vm_type=Gentoo_64" \
 	-var "vm_cpus=8" \
 	-var "vm_memory=4096" \

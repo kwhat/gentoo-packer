@@ -26,11 +26,11 @@ packer build \
 	-var "iso_checksum=${iso_checksum}" \
 	-var "stage_file=${base_uri}/${stage_file}" \
 	-var "stage_checksum=${stage_checksum}" \
-    -var "kernel_config=kernel/hardened-sources.smp.config" \
+	-var "kernel_config=kernel/hardened-sources.smp.config" \
 	-var "vm_name=Gentoo 64 Hardened Base" \
 	-var "vm_description=Gentoo 64 Hardened Base Install" \
 	-var "vm_typ=Gentoo_64" \
-    -var "vm_cpus=8" \
-    -var "vm_memory=4096" \
-    -var "vm_cflags=-march=x86-64 -mtune=generic -O2 -D_FORTIFY_SOURCE=2 -fomit-frame-pointer -fstack-protector-strong --param ssp-buffer-size=4 -pipe" \
+	-var "vm_cpus=8" \
+	-var "vm_memory=4096" \
+	-var "vm_cflags=-march=x86-64 -mtune=generic -O2 -D_FORTIFY_SOURCE=2 -fomit-frame-pointer -fstack-protector-strong --param ssp-buffer-size=4 -pipe" \
 	gentoo.json
